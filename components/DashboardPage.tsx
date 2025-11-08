@@ -5,9 +5,21 @@ import Sidebar from './Sidebar';
 import Editor from './Editor';
 import SettingsModal from './SettingsModal';
 
-// Mock Data moved outside the component to prevent re-creation on re-renders
-const FOLDERS: Folder[] = [];
-const NOTES: Note[] = [];
+// Mock Data: Added a default folder and a welcome note for a better initial experience.
+const FOLDERS: Folder[] = [
+  { id: 'folder-1', name: 'My First Folder' },
+];
+
+const NOTES: Note[] = [
+  {
+    id: 'note-1',
+    title: 'Welcome to FocusX!',
+    content: '<h1>Begin Your Journey</h1><p>This is your first note. Start organizing your thoughts, drafting your ideas, and finding your focus. You can edit or delete this note anytime.</p><ul><li>Create new notes using the plus icon in a folder.</li><li>Organize notes into different folders.</li><li>Use the toolbar above to format your text.</li></ul>',
+    folderId: 'folder-1',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  }
+];
 
 interface DashboardPageProps {
   theme: string;
@@ -23,7 +35,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ theme, toggleTheme, user,
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   useEffect(() => {
-    // Select the first note by default
+    // Select the first note by default if one isn't already selected.
     if (notes.length > 0 && !activeNoteId) {
       setActiveNoteId(notes[0].id);
     }
@@ -61,14 +73,15 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ theme, toggleTheme, user,
   }, [activeNoteId]);
   
   const handleCreateFolder = useCallback(() => {
+    const newFolderName = `New Folder ${folders.length + 1}`;
+    const newFolder: Folder = {
+      id: `folder-${Date.now()}`,
+      name: newFolderName,
+    };
     setFolders(prevFolders => {
-      const newFolder: Folder = {
-        id: `folder-${Date.now()}`,
-        name: `New Folder ${prevFolders.length + 1}`,
-      };
       return [...prevFolders, newFolder];
     });
-  }, []);
+  }, [folders.length]);
   
   const handleOpenSettings = useCallback(() => {
     setIsSettingsOpen(true);
@@ -106,8 +119,11 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ theme, toggleTheme, user,
             onDeleteNote={handleDeleteNote}
           />
         ) : (
-          <div className="flex-1 flex items-center justify-center text-gray-500 dark:text-gray-400">
-            <p>Select a note to start editing or create a new one.</p>
+          <div className="flex-1 flex items-center justify-center text-center text-gray-500 dark:text-gray-400 p-8">
+            <div>
+              <h2 className="text-2xl font-semibold mb-2">No note selected</h2>
+              <p>Select a note from the sidebar to start editing, or create a new folder and note to begin.</p>
+            </div>
           </div>
         )}
       </main>
