@@ -42,10 +42,10 @@ const Pricing: React.FC = () => {
           {plans.map((plan) => (
             <div
               key={plan.name}
-              className={`relative flex flex-col p-8 rounded-2xl shadow-lg border ${plan.isPopular ? 'border-emerald-500' : 'border-gray-200 dark:border-gray-700'}`}
+              className={`relative flex flex-col p-8 rounded-2xl shadow-lg border ${plan.isPopular ? 'border-amber-500 dark:border-emerald-500' : 'border-gray-200 dark:border-gray-700'}`}
             >
               {plan.isPopular && (
-                <div className="absolute top-0 -translate-y-1/2 px-3 py-1 text-sm font-semibold tracking-wide text-white bg-emerald-600 rounded-full shadow-md">
+                <div className="absolute top-0 -translate-y-1/2 px-3 py-1 text-sm font-semibold tracking-wide text-white bg-amber-500 dark:bg-emerald-600 rounded-full shadow-md">
                   Most Popular
                 </div>
               )}
@@ -58,7 +58,7 @@ const Pricing: React.FC = () => {
               <ul role="list" className="mt-8 space-y-4 text-sm leading-6 text-gray-600 dark:text-gray-300">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex gap-x-3">
-                    <CheckIcon className="h-6 w-5 flex-none text-emerald-600" aria-hidden="true" />
+                    <CheckIcon className="h-6 w-5 flex-none text-amber-600 dark:text-emerald-500" aria-hidden="true" />
                     {feature}
                   </li>
                 ))}
@@ -67,8 +67,8 @@ const Pricing: React.FC = () => {
                 href="#"
                 className={`mt-8 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
                   plan.isPopular
-                    ? 'bg-emerald-600 text-white shadow-sm hover:bg-emerald-500 focus-visible:outline-emerald-600'
-                    : 'text-emerald-600 ring-1 ring-inset ring-emerald-200 hover:ring-emerald-300 dark:text-emerald-400 dark:ring-emerald-500 dark:hover:ring-emerald-400'
+                    ? 'bg-amber-500 text-white shadow-sm hover:bg-amber-600 focus-visible:outline-amber-600 dark:bg-emerald-600 dark:hover:bg-emerald-500 dark:focus-visible:outline-emerald-600'
+                    : 'text-amber-600 ring-1 ring-inset ring-amber-200 hover:ring-amber-300 dark:text-emerald-400 dark:ring-emerald-500 dark:hover:ring-emerald-400'
                 }`}
               >
                 Get started
