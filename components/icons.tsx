@@ -143,3 +143,32 @@ export const XIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     <line x1="6" y1="6" x2="18" y2="18" />
   </Icon>
 );
+
+export const Heading1Icon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <Icon {...props}>
+    <path d="M4 12h8" />
+    <path d="M4 18V6" />
+    <path d="M12 18V6" />
+    <path d="M17 18h2a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-2v8z" />
+  </Icon>
+);
+
+export const Heading2Icon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+    <Icon {...props}>
+        <path d="M4 12h8" />
+        <path d="M4 18V6" />
+        <path d="M12 18V6" />
+        <path d="M21 18h-4c0-4 4-3 4-6 0-1.5-1.5-2.5-4-1" />
+    </Icon>
+);
+
+export const ListIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+    <Icon {...props}>
+        <line x1="8" y1="6" x2="21" y2="6" />
+        <line x1="8" y1="12" x2="21" y2="12" />
+        <line x1="8" y1="18" x2="21" y2="18" />
+        <line x1="3" y1="6" x2="3.01" y2="6" />
+        <line x1="3" y1="12" x2="3.01" y2="12" />
+        <line x1="3" y1="18" x2="3.01" y2="18" />
+    </Icon>
+);
