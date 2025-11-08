@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import type { Note } from '../types';
 import { generateTextWithGemini, AIOperation } from '../services/geminiService';
-import { AiIcon, TrashIcon, SparklesIcon, CheckIcon, Heading1Icon, Heading2Icon, ListIcon } from './icons';
+import { AiIcon, TrashIcon, SparklesIcon, CheckIcon, Heading1Icon, Heading2Icon, ListIcon, BoldIcon, ItalicIcon, UnderlineIcon, StrikethroughIcon, ListOrderedIcon } from './icons';
 
 interface EditorProps {
   note: Note;
@@ -19,16 +19,37 @@ const ToolbarButton: React.FC<{ onClick: () => void; children: React.ReactNode; 
   </button>
 );
 
+const ToolbarSeparator: React.FC = () => (
+    <div className="h-5 w-px bg-gray-200 dark:bg-gray-700 mx-1"></div>
+);
+
 const EditorToolbar: React.FC<{ onFormat: (command: string, value?: string) => void }> = ({ onFormat }) => (
-  <div className="flex-shrink-0 px-4 py-2 border-b border-gray-200 dark:border-gray-800 flex items-center space-x-2">
+  <div className="flex-shrink-0 px-4 py-2 border-b border-gray-200 dark:border-gray-800 flex items-center space-x-1 flex-wrap">
     <ToolbarButton title="Heading 1" onClick={() => onFormat('formatBlock', '<h1>')}>
         <Heading1Icon className="h-5 w-5" />
     </ToolbarButton>
     <ToolbarButton title="Heading 2" onClick={() => onFormat('formatBlock', '<h2>')}>
         <Heading2Icon className="h-5 w-5" />
     </ToolbarButton>
+    <ToolbarSeparator />
+    <ToolbarButton title="Bold" onClick={() => onFormat('bold')}>
+        <BoldIcon className="h-5 w-5" />
+    </ToolbarButton>
+    <ToolbarButton title="Italic" onClick={() => onFormat('italic')}>
+        <ItalicIcon className="h-5 w-5" />
+    </ToolbarButton>
+    <ToolbarButton title="Underline" onClick={() => onFormat('underline')}>
+        <UnderlineIcon className="h-5 w-5" />
+    </ToolbarButton>
+    <ToolbarButton title="Strikethrough" onClick={() => onFormat('strikeThrough')}>
+        <StrikethroughIcon className="h-5 w-5" />
+    </ToolbarButton>
+    <ToolbarSeparator />
     <ToolbarButton title="Bulleted List" onClick={() => onFormat('insertUnorderedList')}>
         <ListIcon className="h-5 w-5" />
+    </ToolbarButton>
+    <ToolbarButton title="Numbered List" onClick={() => onFormat('insertOrderedList')}>
+        <ListOrderedIcon className="h-5 w-5" />
     </ToolbarButton>
   </div>
 );
@@ -106,6 +127,7 @@ const Editor: React.FC<EditorProps> = ({ note, onUpdateNote, onDeleteNote }) => 
   const handleFormat = (command: string, value?: string) => {
     document.execCommand(command, false, value);
     if(editorRef.current) {
+        editorRef.current.focus();
         setContent(editorRef.current.innerHTML);
     }
   };

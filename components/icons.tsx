@@ -172,3 +172,44 @@ export const ListIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
         <line x1="3" y1="18" x2="3.01" y2="18" />
     </Icon>
 );
+
+export const BoldIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <Icon {...props}>
+    <path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z" />
+    <path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z" />
+  </Icon>
+);
+
+export const ItalicIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <Icon {...props}>
+    <line x1="19" y1="4" x2="10" y2="4" />
+    <line x1="14" y1="20" x2="5" y2="20" />
+    <line x1="15" y1="4" x2="9" y2="20" />
+  </Icon>
+);
+
+export const UnderlineIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <Icon {...props}>
+    <path d="M6 3v7a6 6 0 0 0 6 6 6 6 0 0 0 6-6V3" />
+    <line x1="4" y1="21" x2="20" y2="21" />
+  </Icon>
+);
+
+export const StrikethroughIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+    <Icon {...props}>
+        <path d="M16 4H9a3 3 0 0 0-2.83 4" />
+        <path d="M14 12a4 4 0 0 1 0 8H6" />
+        <line x1="4" y1="12" x2="18" y2="12" />
+    </Icon>
+);
+
+export const ListOrderedIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+    <Icon {...props}>
+        <line x1="10" y1="6" x2="21" y2="6" />
+        <line x1="10" y1="12" x2="21" y2="12" />
+        <line x1="10" y1="18" x2="21" y2="18" />
+        <path d="M4 6h1v4" />
+        <path d="M4 10h2" />
+        <path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1" />
+    </Icon>
+);
