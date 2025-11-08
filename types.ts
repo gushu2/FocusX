@@ -13,13 +13,6 @@ export interface Folder {
   name: string;
 }
 
-export interface User {
-  id: string;
-  email: string;
-  name: string;
-  plan: 'Spark' | 'Creator' | 'Zenith';
-}
-
 export interface Plan {
   name: 'Spark' | 'Creator' | 'Zenith';
   price: string;
@@ -27,4 +20,11 @@ export interface Plan {
   description: string;
   features: string[];
   isPopular?: boolean;
+}
+
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  plan: 'Spark' | 'Creator' | 'Zenith';
 }

@@ -32,7 +32,7 @@ export async function generateTextWithGemini(operation: AIOperation, text: strin
             contents: fullPrompt,
         });
 
-        return response.text;
+        return response.text ?? '';
     } catch (error) {
         console.error("Error calling Gemini API:", error);
         throw new Error("Failed to generate text. Please check your connection or API key.");

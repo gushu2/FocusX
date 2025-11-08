@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import type { User } from '../types';
 import { FocusXLogo, NoteIcon, SearchIcon, SettingsIcon } from './icons';
 import ThemeToggle from './ThemeToggle';
@@ -29,6 +29,19 @@ const NavLink: React.FC<{ title: string; isActive?: boolean; onClick?: () => voi
 
 const NavSidebar: React.FC<NavSidebarProps> = ({ theme, toggleTheme, user, onOpenSettings, onFocusSearch }) => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setIsUserMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
   
   return (
     <nav className="w-24 bg-amber-100 dark:bg-slate-950/50 border-r border-slate-200 dark:border-slate-800 flex flex-col items-center justify-between py-5">
@@ -50,7 +63,7 @@ const NavSidebar: React.FC<NavSidebarProps> = ({ theme, toggleTheme, user, onOpe
       </div>
       <div className="flex flex-col items-center space-y-5">
         <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
-        <div className="relative">
+        <div className="relative" ref={userMenuRef}>
             <button 
                 onClick={() => setIsUserMenuOpen(prev => !prev)}
                 className="w-10 h-10 flex items-center justify-center bg-slate-300 dark:bg-slate-700 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-500 dark:focus-visible:ring-emerald-500 dark:focus-visible:ring-offset-slate-900" 
