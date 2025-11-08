@@ -132,6 +132,43 @@ const Editor: React.FC<EditorProps> = ({ note, onUpdateNote, onDeleteNote }) => 
     }
   };
 
+  const getYoutubeVideoId = (url: string): string | null => {
+    const regExp = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})(?:\S+)?$/;
+    const match = url.match(regExp);
+    return (match && match[1]) ? match[1] : null;
+  };
+
+  const handlePaste = (e: React.ClipboardEvent<HTMLDivElement>) => {
+      const pastedText = e.clipboardData.getData('text/plain');
+      const videoId = getYoutubeVideoId(pastedText);
+
+      if (videoId) {
+          e.preventDefault();
+          const iframeHtml = `
+              <div class="embed-container" contenteditable="false">
+                  <iframe 
+                      src="https://www.youtube.com/embed/${videoId}" 
+                      frameborder="0" 
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                      allowfullscreen>
+                  </iframe>
+              </div>
+              <p><br></p> <!-- Add a new line after the embed -->
+          `;
+          document.execCommand('insertHTML', false, iframeHtml);
+      } else {
+        // To prevent pasting styled text from other sources, we intercept the paste
+        // and insert as plain text.
+        e.preventDefault();
+        document.execCommand('insertText', false, pastedText);
+      }
+      
+      if (editorRef.current) {
+        setContent(editorRef.current.innerHTML);
+      }
+  };
+
+
   // Check if editor content is effectively empty to show placeholder
   const isEditorEmpty = !content.replace(/<[^>]*>/g, '').trim();
 
@@ -190,6 +227,7 @@ const Editor: React.FC<EditorProps> = ({ note, onUpdateNote, onDeleteNote }) => 
           ref={editorRef}
           contentEditable
           onInput={(e) => setContent(e.currentTarget.innerHTML)}
+          onPaste={handlePaste}
           dangerouslySetInnerHTML={{ __html: content }}
           className="w-full h-full editor-content text-lg text-gray-800 dark:text-gray-300 leading-relaxed focus:outline-none"
         />
